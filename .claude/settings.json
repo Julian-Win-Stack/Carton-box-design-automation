@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); case \"$f\" in */CLAUDE.md|*/README.md|\"\") exit 0;; esac; printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"Just wrote %s. CLAUDE.md: update if this adds a feature, dependency, pattern, command, env var, or folder structure change. README.md: update ONLY at milestone moments — (1) a feature works end-to-end (tick the Status checklist), (2) setup steps changed (new env var, new service, migration step), (3) stack changed (swapped library, new hosting), (4) a \\\"why this approach\\\" insight worth preserving. Do NOT update README for bug fixes, refactors, minor utilities, or mid-feature work. README = current snapshot of the project, not commit history.\"}}' \"$f\"",
+            "statusMessage": "Checking if CLAUDE.md / README.md need updating..."
+          }
+        ]
+      }
+    ]
+  }
+}

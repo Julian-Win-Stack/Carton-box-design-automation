@@ -1,0 +1,4 @@
+-- db/schema.sql
+-- v1 schema lives here. Tables added as features land.
+-- Convention: snake_case table & column names, INTEGER PRIMARY KEY for ids,
+-- created_at TEXT DEFAULT (datetime('now')) for timestamps.
