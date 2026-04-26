@@ -17,6 +17,14 @@ v2+.
 - Clean, readable code over clever code.
 - TypeScript strict mode is on and stays on.
 
+## Context7 Usage
+
+Context7 fetches live library docs. Use it selectively — every call burns tokens and time.
+
+**Use when:** working with rapidly-changing libs (Next.js App Router, Prisma, TanStack Query, Supabase SDK); version-diverging APIs; niche/recently-released libs (e.g. `@neplex/vectorizer` — fetch once when first integrating); generated code fails with "X is not a function" / "method removed in vN".
+
+**Skip when:** stable libs unchanged in years (Express, sharp, better-sqlite3); standard JS/TS/Node features; a working example already exists in this repo (reference that instead); conceptual/architectural questions.
+
 ## Documentation policy
 Do NOT load files under `docs/` at session start. When the current task touches
 a specific topic, check the index below and fetch only that file. If a decision
