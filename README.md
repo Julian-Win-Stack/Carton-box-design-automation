@@ -82,4 +82,4 @@ Open `http://localhost:3000`.
 
 ## Notes
 
-Built solo while interning as a GTM Engineer - automating the entire GTM workflow and at the same time, empowering the GTM team with the new in-house GTM tools to 10x productivity. 
+Built solo while interning as a GTM Engineer inside a Silicon Valley tech startup - automating the entire GTM workflow and at the same time, empowering the GTM team with in-house GTM tools to 10x productivity. 
