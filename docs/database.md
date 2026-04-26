@@ -28,4 +28,13 @@ fine until it isn't.
 - Foreign keys ON: enable `PRAGMA foreign_keys = ON` per connection if/when we add FKs
 
 ## Tables
-*(none yet — added alongside the feature that needs them)*
+
+### `designs`
+Tracks each uploaded design photo.
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `id` | `INTEGER PRIMARY KEY` | auto ROWID |
+| `original_filename` | `TEXT NOT NULL` | name provided by the browser on upload |
+| `storage_path` | `TEXT NOT NULL` | filename only (e.g. `<uuid>.png`); full path = `${UPLOADS_DIR}/<storage_path>` |
+| `created_at` | `TEXT NOT NULL DEFAULT (datetime('now'))` | |

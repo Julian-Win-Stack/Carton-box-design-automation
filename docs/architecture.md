@@ -7,7 +7,7 @@ internal refactors.
 
 ## v1 data flow
 
-(To be drawn as the pipeline is built.)
+Step 1 (photo upload) is complete. Remaining steps are placeholders.
 
 ```
 photo upload  →  crop region  →  preprocess (sharp)  →  vectorize (vtracer)

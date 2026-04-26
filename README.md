@@ -59,7 +59,7 @@ Photo upload → Crop region → Preprocess (sharp) → Vectorize (vtracer)
 [Will update this as I go.]
 
 - [x] Project bootstrapped
-- [ ] Photo upload + storage
+- [x] Photo upload + storage
 - [ ] Region cropping UI
 - [ ] sharp preprocessing pipeline
 - [ ] vtracer integration

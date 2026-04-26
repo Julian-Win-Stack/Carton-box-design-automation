@@ -6,7 +6,23 @@ route is added, removed, or its contract changes. One route = one short
 section.
 
 ## Routes
-*(none yet)*
+
+### `POST /api/uploads`
+Upload a photo. Saves to `${UPLOADS_DIR}/<uuid>.<ext>`, inserts a `designs` row, and redirects `303` to `/designs/<id>`.
+
+**Request:** `multipart/form-data` with field `photo` (PNG, JPEG, or WebP; max 20 MB).
+
+**Responses:**
+- `303` + `Location: /designs/<id>` — success
+- `400 { error }` — missing file or unsupported type
+- `413 { error }` — file exceeds 20 MB
+
+### `GET /api/designs/[id]/image`
+Serve the raw photo bytes for a design by id. Used by `<img>` tags on `/designs/[id]`.
+
+**Responses:**
+- `200` with `content-type` matching the uploaded format — success
+- `404` — design id not found, or file missing on disk
 
 ## Conventions
 - App Router route handlers in `src/app/api/<name>/route.ts`
