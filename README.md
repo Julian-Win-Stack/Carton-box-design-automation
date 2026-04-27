@@ -60,11 +60,10 @@ Photo upload → Crop region → Preprocess (sharp) → Vectorize (vtracer)
 
 - [x] Project bootstrapped
 - [x] Photo upload + storage
-- [ ] Region cropping UI
-- [ ] sharp preprocessing pipeline
-- [ ] vtracer integration
+- [ ] Color palette detection (Gemini + sharp masks)
+- [ ] Per-color vectorization (monochrome vtracer per mask)
 - [ ] Canvas + drag-and-drop
-- [ ] Color picker per path
+- [ ] Color editing (per-group fill swap)
 - [ ] SVG/PDF export
 - [ ] Multi-panel die-cut layout
 - [ ] Customer brand color palettes

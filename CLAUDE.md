@@ -32,6 +32,7 @@ or pattern needs to be recorded, identify the right `docs/*.md` file, propose
 the update, and ask before writing.
 
 ## Documentation index
+- `docs/build-plan.md` — numbered build plan; current step + scope
 - `docs/architecture.md` — system design, data flow, folder structure
 - `docs/stack.md` — full stack list with rationale per choice
 - `docs/database.md` — schema, tables, migration approach

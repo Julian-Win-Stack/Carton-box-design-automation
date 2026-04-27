@@ -6,26 +6,32 @@ primary library breaks. Update when the pipeline changes or a parameter is
 tuned based on real samples.
 
 ## Pipeline (planned)
-1. Crop a region of the uploaded photo (client-side or server-side).
-2. **sharp** — preprocess: increase contrast, denoise, optionally quantize
-   colors. Goal: clean input for the tracer.
-3. **@neplex/vectorizer** — trace to SVG.
-4. Output: SVG string with one `<path fill="…">` per detected shape.
+1. Gemini extracts the ink palette from the uploaded photo (Step 2 produces
+   this — one LLM call, JSON output of hex + descriptive name per color).
+2. **sharp** — for each palette color, create a binary mask: pixels within a
+   tunable color-distance threshold = white, else black. Apply small
+   morphological cleanup (blur + re-threshold) to smooth anti-aliasing.
+3. **@neplex/vectorizer** — trace each binary mask in `ColorMode.Binary`
+   (monochrome mode). Monochrome input is unambiguous, so output quality is
+   significantly higher than multi-color tracing on the original photo.
+4. Per-layer paths get `fill` set to the original color hex, wrapped in
+   `<g id="<color-name>">`.
+5. All groups concatenate into one combined layered SVG for the design.
+6. **SVGO** — minify and clean the combined SVG.
 
 ## Vectorizer config (starting point)
-Picked from the @neplex/vectorizer README; tune against real customer
-samples once the upload flow exists.
+Binary mode on per-color masks. `colorPrecision` and `layerDifference` are
+omitted — they don't apply in binary mode. Remaining params are starting
+defaults; tune per-layer against real factory photos in Step 3.
 
 ```ts
 {
-  colorMode: ColorMode.Color,
-  colorPrecision: 6,
+  colorMode: ColorMode.Binary,
   filterSpeckle: 4,
   spliceThreshold: 45,
   cornerThreshold: 60,
   hierarchical: Hierarchical.Stacked,
   mode: PathSimplifyMode.Spline,
-  layerDifference: 5,
   lengthThreshold: 5,
   maxIterations: 2,
   pathPrecision: 5,
@@ -35,6 +41,7 @@ samples once the upload flow exists.
 ## Verified
 - macOS arm64 (local dev), 800×600 input with text-like shapes → 30 ms,
   ~52 KB SVG. Native binary installed cleanly.
+- Binary-mode timing on real factory photos to be re-measured in Step 3.
 
 ## Fallbacks
 - **vtracer CLI** (Rust binary) — same engine; shell out to it from a child

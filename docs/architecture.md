@@ -7,11 +7,12 @@ internal refactors.
 
 ## v1 data flow
 
-Step 1 (photo upload) is complete. Remaining steps are placeholders.
+Step 1 (photo upload) is complete. Step 2 (color palette detection) and
+Step 3 (per-color vectorization) are next; see `docs/build-plan.md`.
 
 ```
-photo upload  →  crop region  →  preprocess (sharp)  →  vectorize (vtracer)
-              →  drop on canvas (Konva)  →  recolor  →  export SVG/PDF
+photo → LLM (palette) → sharp (masks) → vtracer per layer
+      → combined layered SVG → canvas → export
 ```
 
 ## Folder structure

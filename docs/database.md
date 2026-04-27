@@ -38,3 +38,19 @@ Tracks each uploaded design photo.
 | `original_filename` | `TEXT NOT NULL` | name provided by the browser on upload |
 | `storage_path` | `TEXT NOT NULL` | filename only (e.g. `<uuid>.png`); full path = `${UPLOADS_DIR}/<storage_path>` |
 | `created_at` | `TEXT NOT NULL DEFAULT (datetime('now'))` | |
+
+### `regions`
+One row per ink-color layer detected from a design photo. Created in Step 2
+(color detection); `vectorized_svg_path` populated in Step 3. No `crop_x/y/w/h`
+or `type` columns — those are not part of the color-based approach.
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `id` | `INTEGER PRIMARY KEY` | auto ROWID |
+| `design_id` | `INTEGER NOT NULL` | FK → `designs.id` |
+| `source_path` | `TEXT NOT NULL` | filename of the source photo (mirrors `designs.storage_path`) |
+| `color_hex` | `TEXT NOT NULL` | e.g. `#1a3a8f` |
+| `color_name` | `TEXT NOT NULL` | descriptive name from Gemini, e.g. `navy blue` |
+| `mask_path` | `TEXT NOT NULL` | filename of the binary mask PNG in `${UPLOADS_DIR}` |
+| `vectorized_svg_path` | `TEXT` | filename of the per-layer SVG; `NULL` until Step 3 runs |
+| `created_at` | `TEXT NOT NULL DEFAULT (datetime('now'))` | |

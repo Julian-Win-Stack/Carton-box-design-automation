@@ -10,6 +10,19 @@ implementation details.
 
 ---
 
+## 2026-04-27 — Color-based region detection (replaces semantic regions)
+Decision: Detect ink colors via LLM, create one layer per color via sharp
+masking, vectorize each layer in monochrome mode.
+Reasoning: (1) aligns with print color-separation workflow, (2) higher
+vectorization quality (monochrome beats multi-color), (3) recoloring becomes
+the natural editing operation, (4) eliminates fuzzy region-boundary judgment
+calls.
+Tradeoffs accepted: lose semantic labels (logo/text/illustration); halftone
+handling deferred to v2; threshold tuning needed.
+Trigger to revisit: if real photos consistently produce more than 8 color
+layers, or if users report difficulty editing color-based layers, reconsider
+hybrid approach.
+
 ## 2026-04-26 — Lean CLAUDE.md + on-demand `docs/`
 Restructured project context: CLAUDE.md is now an orientation file pointing at
 topical docs, fetched on demand. Reasoning: CLAUDE.md is loaded every session,
