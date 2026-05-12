@@ -6,7 +6,11 @@
       "Bash(npm install *)",
       "Bash(npm run *)",
       "Bash(git init *)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "WebSearch",
+      "mcp__context7__resolve-library-id",
+      "Bash(npx tsc *)",
+      "WebFetch(domain:ai.google.dev)"
     ]
   }
 }

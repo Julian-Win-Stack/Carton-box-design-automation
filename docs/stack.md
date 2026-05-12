@@ -11,33 +11,42 @@ reconsideration. Update when a dependency is added, swapped, or dropped.
   service.
 - **Tailwind CSS** — utility-first; no design system overhead for an internal
   tool. Reconsider if we onboard a dedicated designer.
-- **react-konva** — canvas library with a React-friendly API. Reconsider if
-  performance bottlenecks force us to drop to a raw `<canvas>` + imperative code.
 
 ## Persistence & storage
 
 - **better-sqlite3 + raw SQL (no ORM)** — small schema, two users, file-backed.
   No migration layer or query builder needed at this size. Reconsider if the
   schema grows past ~10 tables or we hit concurrent-write contention.
-- **Local disk file storage** at `${DATA_DIR}/uploads` — photos and exports
-  live on the Railway persistent volume. Reconsider if we need multi-region or
-  CDN-backed delivery.
+- **Local disk file storage** at `${DATA_DIR}/uploads` (originals) and
+  `${DATA_DIR}/cleaned` (cleanup outputs) — lives on the Railway persistent
+  volume. Reconsider if we need multi-region or CDN-backed delivery.
+
+## AI
+
+- **@google/genai** — Google's current Gemini SDK. Used for the Nano Banana 2
+  image cleanup pass (`gemini-3.1-flash-image-preview`). Env var:
+  `GEMINI_API_KEY`. Critical: input image parts must be built via
+  `createPartFromBase64(data, mime, PartMediaResolutionLevel.MEDIA_RESOLUTION_HIGH)`
+  — the AI Studio default (MEDIUM) is too low for fine Burmese subscript
+  clusters.
 
 ## Image pipeline
 
-- **sharp** — server-side preprocessing (contrast, denoise, color quantization
-  before vectorization). Native binary, fast.
-- **@neplex/vectorizer** — Node binding around VTracer (Rust). Verified to
-  trace a realistic 800×600 sample in ~30 ms on macOS arm64. Reconsider if the
-  package goes unmaintained or fails on Railway's Linux runtime — fallbacks
-  documented in `docs/vectorization.md`.
-- **pdf-lib** — pure-JS PDF generation. Sufficient for the print-ready output;
-  no native deps.
+- **sharp** — server-side preprocessing (downscale to 2048px max edge, JPEG
+  re-encode at quality 92) before sending to the model. Native binary, fast.
 
 ## Hosting
 
 - **Railway with persistent volume at `/data`** — long-lived Node server, not
-  serverless. Native binaries (sharp, better-sqlite3, vectorizer) work without
-  bundler quirks; vectorization isn't bound by serverless timeouts; volume
-  preserves SQLite + uploads across deploys. Reconsider if we need horizontal
-  scaling beyond a single node.
+  serverless. Native binaries (sharp, better-sqlite3) work without bundler
+  quirks; the model call isn't bound by serverless timeouts; volume preserves
+  SQLite + uploads + cleaned outputs across deploys. Reconsider if we need
+  horizontal scaling beyond a single node.
+
+## Removed (2026-05-12 pivot)
+
+- `@neplex/vectorizer`, `svgo` — vectorization step retired (cleaned raster
+  is embedded directly in final PDF; no per-color SVG layers).
+- `pdfkit`, `svg-to-pdfkit` — old layered-SVG PDF download was tied to the
+  vectorization pipeline; removed with it.
+- `react-konva` — was planned for canvas drag-and-drop; never integrated.

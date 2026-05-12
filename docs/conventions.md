@@ -41,6 +41,8 @@ README = current snapshot of the project, not commit history.
 
 ## When to update `docs/*.md`
 Update the matching topical doc whenever a fact in it goes stale or a new fact
-joins. Convention/decision changes go in `docs/conventions.md` or
-`docs/decisions.md` respectively. CLAUDE.md should not need updates for topical
-changes — only when the index itself or the documentation policy shifts.
+joins. Convention changes go in `docs/conventions.md`. CLAUDE.md should not
+need updates for topical changes — only when the index itself or the
+documentation policy shifts. **Do not maintain a separate decision log.**
+Significant decisions belong in the relevant topical doc's body and in the
+git commit message that introduces the change.

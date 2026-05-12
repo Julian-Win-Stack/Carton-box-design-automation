@@ -33,6 +33,9 @@ yarn-error.log*
 # local data: SQLite DB, WAL/SHM sidecars, uploaded photos
 /data/
 
+# experimental scratch dir (script outputs + test inputs)
+/tmp/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -7,5 +7,6 @@ CREATE TABLE IF NOT EXISTS designs (
   id INTEGER PRIMARY KEY,
   original_filename TEXT NOT NULL,
   storage_path TEXT NOT NULL,
+  cleaned_path TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
